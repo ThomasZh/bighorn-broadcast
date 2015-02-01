@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import net.younguard.bighorn.comm.Command;
 import net.younguard.bighorn.comm.RequestCommand;
-import net.younguard.bighorn.comm.tlv.ByteUtil;
+import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
 
@@ -30,7 +30,7 @@ public class SocketCloseReq
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, ByteUtil.INTEGER_LENGTH, ByteUtil.int2Byte(this.getSequence()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
@@ -52,7 +52,7 @@ public class SocketCloseReq
 
 		int i = 0;
 		TlvObject tSequence = tlv.getChild(i++);
-		this.setSequence(ByteUtil.byte2Int(tSequence.getValue()));
+		this.setSequence(TlvByteUtil.byte2Int(tSequence.getValue()));
 		logger.debug("sequence: " + this.getSequence());
 
 		return this;

@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import net.younguard.bighorn.comm.Command;
 import net.younguard.bighorn.comm.ResponseCommand;
-import net.younguard.bighorn.comm.tlv.ByteUtil;
+import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
 
@@ -30,8 +30,8 @@ public class MsgPangResp
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, ByteUtil.INTEGER_LENGTH, ByteUtil.int2Byte(this.getSequence()));
-		TlvObject tRespState = new TlvObject(i++, ByteUtil.SHORT_LENGTH, ByteUtil.short2Byte(this.getRespState()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(this.getRespState()));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
@@ -54,11 +54,11 @@ public class MsgPangResp
 
 		int i = 0;
 		TlvObject tSequence = tlv.getChild(i++);
-		this.setSequence(ByteUtil.byte2Int(tSequence.getValue()));
+		this.setSequence(TlvByteUtil.byte2Int(tSequence.getValue()));
 		logger.debug("sequence: " + this.getSequence());
 
 		TlvObject tRespState = tlv.getChild(i++);
-		this.setRespState(ByteUtil.byte2Short(tRespState.getValue()));
+		this.setRespState(TlvByteUtil.byte2Short(tRespState.getValue()));
 		logger.debug("respState: " + this.getRespState());
 
 		return this;
