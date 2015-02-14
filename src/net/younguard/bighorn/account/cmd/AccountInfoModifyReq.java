@@ -20,11 +20,15 @@ public class AccountInfoModifyReq
 	{
 		int i = 0;
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tDeviceId = new TlvObject(i++, deviceId);
+		TlvObject tAccountId = new TlvObject(i++, accountId);
 		TlvObject tNickname = new TlvObject(i++, nickname);
 		TlvObject tAvatarUrl = new TlvObject(i++, avatarUrl);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
+		tlv.add(tDeviceId);
+		tlv.add(tAccountId);
 		tlv.add(tNickname);
 		tlv.add(tAvatarUrl);
 
@@ -47,6 +51,14 @@ public class AccountInfoModifyReq
 		TlvObject tSequence = tlv.getChild(i++);
 		this.setSequence(TlvByteUtil.byte2Int(tSequence.getValue()));
 		logger.debug("sequence: " + this.getSequence());
+
+		TlvObject tDeviceId = tlv.getChild(i++);
+		deviceId = new String(tDeviceId.getValue(), "UTF-8");
+		logger.debug("deviceId: " + deviceId);
+
+		TlvObject tAccountId = tlv.getChild(i++);
+		accountId = new String(tAccountId.getValue(), "UTF-8");
+		logger.debug("accountId: " + accountId);
 
 		TlvObject tNickname = tlv.getChild(i++);
 		nickname = new String(tNickname.getValue(), "UTF-8");
@@ -73,16 +85,30 @@ public class AccountInfoModifyReq
 		this.setSequence(sequence);
 	}
 
-	public AccountInfoModifyReq(int sequence, String nickname, String avatarUrl)
+	public AccountInfoModifyReq(int sequence, String deviceId, String accountId, String nickname, String avatarUrl)
 	{
 		this(sequence);
 
+		this.setDeviceId(deviceId);
+		this.setAccountId(accountId);
 		this.setNickname(nickname);
 		this.setAvatarUrl(avatarUrl);
 	}
 
+	private String deviceId;
+	private String accountId;
 	private String nickname;
 	private String avatarUrl;
+
+	public String getAccountId()
+	{
+		return accountId;
+	}
+
+	public void setAccountId(String accountId)
+	{
+		this.accountId = accountId;
+	}
 
 	public String getAvatarUrl()
 	{
@@ -102,6 +128,16 @@ public class AccountInfoModifyReq
 	public void setNickname(String nickname)
 	{
 		this.nickname = nickname;
+	}
+
+	public String getDeviceId()
+	{
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId)
+	{
+		this.deviceId = deviceId;
 	}
 
 	private final static Logger logger = LoggerFactory.getLogger(AccountInfoModifyReq.class);

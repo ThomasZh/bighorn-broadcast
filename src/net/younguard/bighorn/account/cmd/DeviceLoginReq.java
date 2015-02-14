@@ -3,7 +3,7 @@ package net.younguard.bighorn.account.cmd;
 import java.io.UnsupportedEncodingException;
 
 import net.younguard.bighorn.CommandTag;
-import net.younguard.bighorn.comm.ResponseCommand;
+import net.younguard.bighorn.comm.RequestCommand;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
@@ -11,20 +11,8 @@ import net.younguard.bighorn.comm.tlv.TlvParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * after connect socket, client send first package for server. put device
- * ID,notify token and username. server answer ok.
- * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
- * reserved. http://www.younguard.net
- * 
- * NOTICE ! You can copy or redistribute this code freely, but you should not
- * remove the information about the copyright notice and the author.
- * 
- * @author ThomasZhang, thomas.zh@qq.com
- */
-public class RegisterDeviceNotifyTokenResp
-		extends ResponseCommand
+public class DeviceLoginReq
+		extends RequestCommand
 {
 	@Override
 	public TlvObject encode()
@@ -32,12 +20,12 @@ public class RegisterDeviceNotifyTokenResp
 	{
 		int i = 0;
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
-		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.short2Byte(this.getRespState()));
+		TlvObject tDeviceId = new TlvObject(i++, deviceId);
 		TlvObject tAccountId = new TlvObject(i++, accountId);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
-		tlv.add(tRespState);
+		tlv.add(tDeviceId);
 		tlv.add(tAccountId);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
@@ -46,7 +34,7 @@ public class RegisterDeviceNotifyTokenResp
 	}
 
 	@Override
-	public RegisterDeviceNotifyTokenResp decode(TlvObject tlv)
+	public DeviceLoginReq decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
@@ -60,9 +48,9 @@ public class RegisterDeviceNotifyTokenResp
 		this.setSequence(TlvByteUtil.byte2Int(tSequence.getValue()));
 		logger.debug("sequence: " + this.getSequence());
 
-		TlvObject tRespState = tlv.getChild(i++);
-		this.setRespState(TlvByteUtil.byte2Short(tRespState.getValue()));
-		logger.debug("respState: " + this.getRespState());
+		TlvObject tDeviceId = tlv.getChild(i++);
+		deviceId = new String(tDeviceId.getValue(), "UTF-8");
+		logger.debug("deviceId: " + deviceId);
 
 		TlvObject tAccountId = tlv.getChild(i++);
 		accountId = new String(tAccountId.getValue(), "UTF-8");
@@ -73,33 +61,38 @@ public class RegisterDeviceNotifyTokenResp
 
 	// //////////////////////////////////////////////////////
 
-	public RegisterDeviceNotifyTokenResp()
+	public DeviceLoginReq()
 	{
-		this.setTag(CommandTag.REGISTER_NOTIFY_TOKEN_RESPONSE);
+		this.setTag(CommandTag.DEVICE_LOGIN_REQUEST);
 	}
 
-	public RegisterDeviceNotifyTokenResp(int sequence)
+	public DeviceLoginReq(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public RegisterDeviceNotifyTokenResp(int sequence, short state)
+	public DeviceLoginReq(int sequence, String deviceId, String accountId)
 	{
 		this(sequence);
 
-		this.setRespState(state);
-	}
-
-	public RegisterDeviceNotifyTokenResp(int sequence, short state, String accountId)
-	{
-		this(sequence, state);
-
+		this.setDeviceId(deviceId);
 		this.setAccountId(accountId);
 	}
 
+	private String deviceId;
 	private String accountId;
+
+	public String getDeviceId()
+	{
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId)
+	{
+		this.deviceId = deviceId;
+	}
 
 	public String getAccountId()
 	{
@@ -111,6 +104,6 @@ public class RegisterDeviceNotifyTokenResp
 		this.accountId = accountId;
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(RegisterDeviceNotifyTokenResp.class);
+	private final static Logger logger = LoggerFactory.getLogger(DeviceLoginReq.class);
 
 }

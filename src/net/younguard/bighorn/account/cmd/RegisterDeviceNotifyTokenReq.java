@@ -34,13 +34,13 @@ public class RegisterDeviceNotifyTokenReq
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tDeviceId = new TlvObject(i++, deviceId);
 		TlvObject tNotifyToken = new TlvObject(i++, notifyToken);
-		TlvObject tNickname = new TlvObject(i++, nickname);
+		TlvObject tOsVersion = new TlvObject(i++, osVersion);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
 		tlv.add(tDeviceId);
 		tlv.add(tNotifyToken);
-		tlv.add(tNickname);
+		tlv.add(tOsVersion);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
@@ -70,9 +70,9 @@ public class RegisterDeviceNotifyTokenReq
 		notifyToken = new String(tNotifyToken.getValue(), "UTF-8");
 		logger.debug("notifyToken: " + notifyToken);
 
-		TlvObject tUsername = tlv.getChild(i++);
-		nickname = new String(tUsername.getValue(), "UTF-8");
-		logger.debug("nickname: " + nickname);
+		TlvObject tOsVersion = tlv.getChild(i++);
+		osVersion = new String(tOsVersion.getValue(), "UTF-8");
+		logger.debug("osVersion: " + osVersion);
 
 		return this;
 	}
@@ -91,18 +91,18 @@ public class RegisterDeviceNotifyTokenReq
 		this.setSequence(sequence);
 	}
 
-	public RegisterDeviceNotifyTokenReq(int sequence, String deviceId, String notifyToken, String username)
+	public RegisterDeviceNotifyTokenReq(int sequence, String deviceId, String notifyToken, String osVersion)
 	{
 		this(sequence);
 
 		this.setDeviceId(deviceId);
 		this.setNotifyToken(notifyToken);
-		this.setNickname(username);
+		this.setOsVersion(osVersion);
 	}
 
 	private String deviceId;
 	private String notifyToken;
-	private String nickname;
+	private String osVersion;
 
 	public String getDeviceId()
 	{
@@ -124,14 +124,14 @@ public class RegisterDeviceNotifyTokenReq
 		this.notifyToken = notifyToken;
 	}
 
-	public String getNickname()
+	public String getOsVersion()
 	{
-		return nickname;
+		return osVersion;
 	}
 
-	public void setNickname(String username)
+	public void setOsVersion(String osVersion)
 	{
-		this.nickname = username;
+		this.osVersion = osVersion;
 	}
 
 	private final static Logger logger = LoggerFactory.getLogger(RegisterDeviceNotifyTokenReq.class);

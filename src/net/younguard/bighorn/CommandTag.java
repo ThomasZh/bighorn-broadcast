@@ -17,8 +17,10 @@ public class CommandTag
 	// account session
 	public static final short REGISTER_NOTIFY_TOKEN_REQUEST = 20101;
 	public static final short REGISTER_NOTIFY_TOKEN_RESPONSE = 20102;
-	public static final short ACCOUNT_INFO_MODIFY_REQUEST = 20103;
-	public static final short ACCOUNT_INFO_MODIFY_RESPONSE = 20104;
+	public static final short DEVICE_LOGIN_REQUEST = 20103;
+	public static final short DEVICE_LOGIN_RESPONSE = 20104;
+	public static final short ACCOUNT_INFO_MODIFY_REQUEST = 20105;
+	public static final short ACCOUNT_INFO_MODIFY_RESPONSE = 20106;
 	public static final short SOCKET_CLOSE_REQUEST = 20109;
 
 	// //////////////////////////////////////////////////

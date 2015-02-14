@@ -11,19 +11,7 @@ import net.younguard.bighorn.comm.tlv.TlvParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * after connect socket, client send first package for server. put device
- * ID,notify token and username. server answer ok.
- * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
- * reserved. http://www.younguard.net
- * 
- * NOTICE ! You can copy or redistribute this code freely, but you should not
- * remove the information about the copyright notice and the author.
- * 
- * @author ThomasZhang, thomas.zh@qq.com
- */
-public class RegisterDeviceNotifyTokenResp
+public class DeviceLoginResp
 		extends ResponseCommand
 {
 	@Override
@@ -33,12 +21,12 @@ public class RegisterDeviceNotifyTokenResp
 		int i = 0;
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.short2Byte(this.getRespState()));
-		TlvObject tAccountId = new TlvObject(i++, accountId);
+		TlvObject tSessionTicket = new TlvObject(i++, sessionTicket);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
 		tlv.add(tRespState);
-		tlv.add(tAccountId);
+		tlv.add(tSessionTicket);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
@@ -46,7 +34,7 @@ public class RegisterDeviceNotifyTokenResp
 	}
 
 	@Override
-	public RegisterDeviceNotifyTokenResp decode(TlvObject tlv)
+	public DeviceLoginResp decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
@@ -64,53 +52,53 @@ public class RegisterDeviceNotifyTokenResp
 		this.setRespState(TlvByteUtil.byte2Short(tRespState.getValue()));
 		logger.debug("respState: " + this.getRespState());
 
-		TlvObject tAccountId = tlv.getChild(i++);
-		accountId = new String(tAccountId.getValue(), "UTF-8");
-		logger.debug("accountId: " + accountId);
+		TlvObject tSessionTicket = tlv.getChild(i++);
+		sessionTicket = new String(tSessionTicket.getValue(), "UTF-8");
+		logger.debug("sessionTicket: " + sessionTicket);
 
 		return this;
 	}
 
 	// //////////////////////////////////////////////////////
 
-	public RegisterDeviceNotifyTokenResp()
+	public DeviceLoginResp()
 	{
-		this.setTag(CommandTag.REGISTER_NOTIFY_TOKEN_RESPONSE);
+		this.setTag(CommandTag.DEVICE_LOGIN_RESPONSE);
 	}
 
-	public RegisterDeviceNotifyTokenResp(int sequence)
+	public DeviceLoginResp(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public RegisterDeviceNotifyTokenResp(int sequence, short state)
+	public DeviceLoginResp(int sequence, short state)
 	{
 		this(sequence);
 
 		this.setRespState(state);
 	}
 
-	public RegisterDeviceNotifyTokenResp(int sequence, short state, String accountId)
+	public DeviceLoginResp(int sequence, short state, String sessionTicket)
 	{
 		this(sequence, state);
 
-		this.setAccountId(accountId);
+		this.setSessionTicket(sessionTicket);
 	}
 
-	private String accountId;
+	private String sessionTicket;
 
-	public String getAccountId()
+	public String getSessionTicket()
 	{
-		return accountId;
+		return sessionTicket;
 	}
 
-	public void setAccountId(String accountId)
+	public void setSessionTicket(String sessionTicket)
 	{
-		this.accountId = accountId;
+		this.sessionTicket = sessionTicket;
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(RegisterDeviceNotifyTokenResp.class);
+	private final static Logger logger = LoggerFactory.getLogger(DeviceLoginResp.class);
 
 }

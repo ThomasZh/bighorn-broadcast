@@ -21,10 +21,12 @@ public class AccountInfoModifyResp
 		int i = 0;
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.short2Byte(this.getRespState()));
+		TlvObject tAccountId = new TlvObject(i++, accountId);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
 		tlv.add(tRespState);
+		tlv.add(tAccountId);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
@@ -37,7 +39,7 @@ public class AccountInfoModifyResp
 	{
 		this.setTag(tlv.getTag());
 
-		int childCount = 2;
+		int childCount = 3;
 		TlvParser.decodeChildren(tlv, childCount);
 		logger.debug("from tlv:(tag=" + this.getTag() + ", child=" + childCount + ") to command");
 
@@ -49,6 +51,10 @@ public class AccountInfoModifyResp
 		TlvObject tRespState = tlv.getChild(i++);
 		this.setRespState(TlvByteUtil.byte2Short(tRespState.getValue()));
 		logger.debug("respState: " + this.getRespState());
+
+		TlvObject tAccountId = tlv.getChild(i++);
+		accountId = new String(tAccountId.getValue(), "UTF-8");
+		logger.debug("accountId: " + accountId);
 
 		return this;
 	}
@@ -72,6 +78,25 @@ public class AccountInfoModifyResp
 		this(sequence);
 
 		this.setRespState(state);
+	}
+
+	public AccountInfoModifyResp(int sequence, short state, String accountId)
+	{
+		this(sequence, state);
+
+		this.setAccountId(accountId);
+	}
+
+	private String accountId;
+
+	public String getAccountId()
+	{
+		return accountId;
+	}
+
+	public void setAccountId(String accountId)
+	{
+		this.accountId = accountId;
 	}
 
 	private final static Logger logger = LoggerFactory.getLogger(AccountInfoModifyResp.class);
