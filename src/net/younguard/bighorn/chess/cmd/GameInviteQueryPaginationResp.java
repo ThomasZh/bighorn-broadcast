@@ -1,30 +1,23 @@
-package net.younguard.bighorn.broadcast.cmd;
+package net.younguard.bighorn.chess.cmd;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import net.younguard.bighorn.CommandTag;
-import net.younguard.bighorn.comm.ResponseCommand;
+import net.younguard.bighorn.comm.QueryPaginationResp;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
+import net.younguard.bighorn.domain.GameInviteInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * this the the message response from server for query online device number
- * request.
- * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
- * reserved. http://www.younguard.net
- * 
- * NOTICE ! You can copy or redistribute this code freely, but you should not
- * remove the information about the copyright notice and the author.
- * 
- * @author ThomasZhang, thomas.zh@qq.com
- */
-public class QueryOnlineNumResp
-		extends ResponseCommand
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+public class GameInviteQueryPaginationResp
+		extends QueryPaginationResp
 {
 	@Override
 	public TlvObject encode()
@@ -33,20 +26,23 @@ public class QueryOnlineNumResp
 		int i = 0;
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.short2Byte(this.getRespState()));
-		TlvObject tNum = new TlvObject(i++, TlvByteUtil.int2Byte(this.getNum()));
+		Gson gson = new Gson();
+		String jsonInvites = gson.toJson(invites);
+		TlvObject tInvites = new TlvObject(i++, jsonInvites);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
 		tlv.add(tRespState);
-		tlv.add(tNum);
+		tlv.add(tInvites);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
+
 		return tlv;
 	}
 
 	@Override
-	public QueryOnlineNumResp decode(TlvObject tlv)
+	public GameInviteQueryPaginationResp decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
@@ -64,53 +60,57 @@ public class QueryOnlineNumResp
 		this.setRespState(TlvByteUtil.byte2Short(tRespState.getValue()));
 		logger.debug("respState: " + this.getRespState());
 
-		TlvObject tNum = tlv.getChild(i++);
-		this.setNum(TlvByteUtil.byte2Int(tNum.getValue()));
-		logger.debug("num: " + this.getNum());
+		TlvObject tInvites = tlv.getChild(i++);
+		String jsonInvites = new String(tInvites.getValue(), "UTF-8");
+		logger.debug("jsonInvites: " + jsonInvites);
+		Gson gson = new Gson();
+		invites = gson.fromJson(jsonInvites, new TypeToken<List<GameInviteInfo>>()
+		{
+		}.getType());
 
 		return this;
 	}
 
 	// //////////////////////////////////////////////////////
 
-	public QueryOnlineNumResp()
+	public GameInviteQueryPaginationResp()
 	{
-		this.setTag(CommandTag.QUERY_ONLINE_NUMBER_RESPONSE);
+		this.setTag(CommandTag.GAME_INVITE_QUERY_PAGINATION_RESPONSE);
 	}
 
-	public QueryOnlineNumResp(int sequence)
+	public GameInviteQueryPaginationResp(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public QueryOnlineNumResp(int sequence, short state)
+	public GameInviteQueryPaginationResp(int sequence, short state)
 	{
 		this(sequence);
 
 		this.setRespState(state);
 	}
 
-	public QueryOnlineNumResp(int sequence, short state, int num)
+	public GameInviteQueryPaginationResp(int sequence, short state, List<GameInviteInfo> invites)
 	{
-		this(sequence, state);
+		this(sequence);
 
-		this.setNum(num);
+		this.setRespState(state);
+		this.setInvites(invites);
 	}
 
-	private int num = 0;
+	private List<GameInviteInfo> invites;
 
-	public int getNum()
+	public List<GameInviteInfo> getInvites()
 	{
-		return num;
+		return invites;
 	}
 
-	public void setNum(int num)
+	public void setInvites(List<GameInviteInfo> invites)
 	{
-		this.num = num;
+		this.invites = invites;
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(QueryOnlineNumResp.class);
-
+	private final static Logger logger = LoggerFactory.getLogger(GameInviteQueryPaginationResp.class);
 }

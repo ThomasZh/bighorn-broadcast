@@ -1,4 +1,4 @@
-package net.younguard.bighorn.broadcast;
+package net.younguard.bighorn;
 
 /**
  * error code define.

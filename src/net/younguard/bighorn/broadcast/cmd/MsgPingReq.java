@@ -2,7 +2,7 @@ package net.younguard.bighorn.broadcast.cmd;
 
 import java.io.UnsupportedEncodingException;
 
-import net.younguard.bighorn.comm.Command;
+import net.younguard.bighorn.CommandTag;
 import net.younguard.bighorn.comm.RequestCommand;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 /**
  * client send a request message to server.
  * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights reserved.
- * http://www.younguard.net
+ * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
+ * reserved. http://www.younguard.net
  * 
  * NOTICE ! You can copy or redistribute this code freely, but you should not
  * remove the information about the copyright notice and the author.
@@ -30,7 +30,7 @@ public class MsgPingReq
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tUsername = new TlvObject(i++, username);
 		TlvObject tContent = new TlvObject(i++, content);
 
@@ -45,7 +45,7 @@ public class MsgPingReq
 	}
 
 	@Override
-	public Command decode(TlvObject tlv)
+	public MsgPingReq decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());

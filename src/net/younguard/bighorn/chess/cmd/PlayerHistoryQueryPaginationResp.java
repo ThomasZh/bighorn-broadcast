@@ -1,30 +1,23 @@
-package net.younguard.bighorn.broadcast.cmd;
+package net.younguard.bighorn.chess.cmd;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import net.younguard.bighorn.CommandTag;
-import net.younguard.bighorn.comm.ResponseCommand;
+import net.younguard.bighorn.comm.QueryPaginationResp;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
+import net.younguard.bighorn.domain.GameMasterInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * this the the message response from server for query online device number
- * request.
- * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
- * reserved. http://www.younguard.net
- * 
- * NOTICE ! You can copy or redistribute this code freely, but you should not
- * remove the information about the copyright notice and the author.
- * 
- * @author ThomasZhang, thomas.zh@qq.com
- */
-public class QueryOnlineNumResp
-		extends ResponseCommand
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+public class PlayerHistoryQueryPaginationResp
+		extends QueryPaginationResp
 {
 	@Override
 	public TlvObject encode()
@@ -33,20 +26,23 @@ public class QueryOnlineNumResp
 		int i = 0;
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.short2Byte(this.getRespState()));
-		TlvObject tNum = new TlvObject(i++, TlvByteUtil.int2Byte(this.getNum()));
+		Gson gson = new Gson();
+		String jsonGames = gson.toJson(games);
+		TlvObject tGames = new TlvObject(i++, jsonGames);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
 		tlv.add(tRespState);
-		tlv.add(tNum);
+		tlv.add(tGames);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
+
 		return tlv;
 	}
 
 	@Override
-	public QueryOnlineNumResp decode(TlvObject tlv)
+	public PlayerHistoryQueryPaginationResp decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
@@ -64,53 +60,57 @@ public class QueryOnlineNumResp
 		this.setRespState(TlvByteUtil.byte2Short(tRespState.getValue()));
 		logger.debug("respState: " + this.getRespState());
 
-		TlvObject tNum = tlv.getChild(i++);
-		this.setNum(TlvByteUtil.byte2Int(tNum.getValue()));
-		logger.debug("num: " + this.getNum());
+		TlvObject tGames = tlv.getChild(i++);
+		String jsonGames = new String(tGames.getValue(), "UTF-8");
+		logger.debug("jsonGames: " + jsonGames);
+		Gson gson = new Gson();
+		games = gson.fromJson(jsonGames, new TypeToken<List<GameMasterInfo>>()
+		{
+		}.getType());
 
 		return this;
 	}
 
 	// //////////////////////////////////////////////////////
 
-	public QueryOnlineNumResp()
+	public PlayerHistoryQueryPaginationResp()
 	{
-		this.setTag(CommandTag.QUERY_ONLINE_NUMBER_RESPONSE);
+		this.setTag(CommandTag.GAME_PLAYER_HISTORY_QUERY_PAGINATION_RESPONSE);
 	}
 
-	public QueryOnlineNumResp(int sequence)
+	public PlayerHistoryQueryPaginationResp(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public QueryOnlineNumResp(int sequence, short state)
+	public PlayerHistoryQueryPaginationResp(int sequence, short state)
 	{
 		this(sequence);
 
 		this.setRespState(state);
 	}
 
-	public QueryOnlineNumResp(int sequence, short state, int num)
+	public PlayerHistoryQueryPaginationResp(int sequence, short state, List<GameMasterInfo> games)
 	{
-		this(sequence, state);
+		this(sequence);
 
-		this.setNum(num);
+		this.setRespState(state);
+		this.setGames(games);
 	}
 
-	private int num = 0;
+	private List<GameMasterInfo> games;
 
-	public int getNum()
+	public List<GameMasterInfo> getGames()
 	{
-		return num;
+		return games;
 	}
 
-	public void setNum(int num)
+	public void setGames(List<GameMasterInfo> games)
 	{
-		this.num = num;
+		this.games = games;
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(QueryOnlineNumResp.class);
-
+	private final static Logger logger = LoggerFactory.getLogger(PlayerHistoryQueryPaginationResp.class);
 }

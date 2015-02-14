@@ -1,8 +1,8 @@
-package net.younguard.bighorn.broadcast.cmd;
+package net.younguard.bighorn.account.cmd;
 
 import java.io.UnsupportedEncodingException;
 
-import net.younguard.bighorn.comm.Command;
+import net.younguard.bighorn.CommandTag;
 import net.younguard.bighorn.comm.RequestCommand;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
@@ -12,17 +12,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * after connect socket, client send first package for server. put device ID,notify token and username.
+ * after connect socket, client send first package for server. put device
+ * ID,notify token and nickname.
  * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights reserved.
- * http://www.younguard.net
+ * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
+ * reserved. http://www.younguard.net
  * 
  * NOTICE ! You can copy or redistribute this code freely, but you should not
  * remove the information about the copyright notice and the author.
  * 
  * @author ThomasZhang, thomas.zh@qq.com
  */
-public class RegisterNotifyTokenReq
+public class RegisterDeviceNotifyTokenReq
 		extends RequestCommand
 {
 	@Override
@@ -30,16 +31,16 @@ public class RegisterNotifyTokenReq
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tDeviceId = new TlvObject(i++, deviceId);
 		TlvObject tNotifyToken = new TlvObject(i++, notifyToken);
-		TlvObject tUsername = new TlvObject(i++, username);
+		TlvObject tNickname = new TlvObject(i++, nickname);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
 		tlv.add(tDeviceId);
 		tlv.add(tNotifyToken);
-		tlv.add(tUsername);
+		tlv.add(tNickname);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
@@ -47,7 +48,7 @@ public class RegisterNotifyTokenReq
 	}
 
 	@Override
-	public Command decode(TlvObject tlv)
+	public RegisterDeviceNotifyTokenReq decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
@@ -70,38 +71,38 @@ public class RegisterNotifyTokenReq
 		logger.debug("notifyToken: " + notifyToken);
 
 		TlvObject tUsername = tlv.getChild(i++);
-		username = new String(tUsername.getValue(), "UTF-8");
-		logger.debug("username: " + username);
+		nickname = new String(tUsername.getValue(), "UTF-8");
+		logger.debug("nickname: " + nickname);
 
 		return this;
 	}
 
 	// //////////////////////////////////////////////////////
 
-	public RegisterNotifyTokenReq()
+	public RegisterDeviceNotifyTokenReq()
 	{
 		this.setTag(CommandTag.REGISTER_NOTIFY_TOKEN_REQUEST);
 	}
 
-	public RegisterNotifyTokenReq(int sequence)
+	public RegisterDeviceNotifyTokenReq(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public RegisterNotifyTokenReq(int sequence, String deviceId, String notifyToken, String username)
+	public RegisterDeviceNotifyTokenReq(int sequence, String deviceId, String notifyToken, String username)
 	{
 		this(sequence);
 
 		this.setDeviceId(deviceId);
 		this.setNotifyToken(notifyToken);
-		this.setUsername(username);
+		this.setNickname(username);
 	}
 
 	private String deviceId;
 	private String notifyToken;
-	private String username;
+	private String nickname;
 
 	public String getDeviceId()
 	{
@@ -123,16 +124,16 @@ public class RegisterNotifyTokenReq
 		this.notifyToken = notifyToken;
 	}
 
-	public String getUsername()
+	public String getNickname()
 	{
-		return username;
+		return nickname;
 	}
 
-	public void setUsername(String username)
+	public void setNickname(String username)
 	{
-		this.username = username;
+		this.nickname = username;
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(RegisterNotifyTokenReq.class);
+	private final static Logger logger = LoggerFactory.getLogger(RegisterDeviceNotifyTokenReq.class);
 
 }

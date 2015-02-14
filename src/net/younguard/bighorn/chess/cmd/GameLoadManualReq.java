@@ -1,8 +1,8 @@
-package net.younguard.bighorn.broadcast.cmd;
+package net.younguard.bighorn.chess.cmd;
 
 import java.io.UnsupportedEncodingException;
 
-import net.younguard.bighorn.comm.Command;
+import net.younguard.bighorn.CommandTag;
 import net.younguard.bighorn.comm.RequestCommand;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
@@ -11,18 +11,7 @@ import net.younguard.bighorn.comm.tlv.TlvParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * before disconnect socket, client send last package for server.
- * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights reserved.
- * http://www.younguard.net
- * 
- * NOTICE ! You can copy or redistribute this code freely, but you should not
- * remove the information about the copyright notice and the author.
- * 
- * @author ThomasZhang, thomas.zh@qq.com
- */
-public class SocketCloseReq
+public class GameLoadManualReq
 		extends RequestCommand
 {
 	@Override
@@ -30,10 +19,12 @@ public class SocketCloseReq
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tGameId = new TlvObject(i++, gameId);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
+		tlv.add(tGameId);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
@@ -41,12 +32,12 @@ public class SocketCloseReq
 	}
 
 	@Override
-	public Command decode(TlvObject tlv)
+	public GameLoadManualReq decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
 
-		int childCount = 1;
+		int childCount = 2;
 		TlvParser.decodeChildren(tlv, childCount);
 		logger.debug("from tlv:(tag=" + this.getTag() + ", child=" + childCount + ") to command");
 
@@ -55,23 +46,46 @@ public class SocketCloseReq
 		this.setSequence(TlvByteUtil.byte2Int(tSequence.getValue()));
 		logger.debug("sequence: " + this.getSequence());
 
+		TlvObject tGameId = tlv.getChild(i++);
+		gameId = new String(tGameId.getValue(), "UTF-8");
+		logger.debug("gameId: " + gameId);
+
 		return this;
 	}
 
 	// //////////////////////////////////////////////////////
 
-	public SocketCloseReq()
+	public GameLoadManualReq()
 	{
-		this.setTag(CommandTag.SOCKET_CLOSE_REQUEST);
+		this.setTag(CommandTag.GAME_LOAD_MANUAL_REQUEST);
 	}
 
-	public SocketCloseReq(int sequence)
+	public GameLoadManualReq(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(SocketCloseReq.class);
+	public GameLoadManualReq(int sequence, String gameId)
+	{
+		this(sequence);
+
+		this.setGameId(gameId);
+	}
+
+	private String gameId;
+
+	public String getGameId()
+	{
+		return gameId;
+	}
+
+	public void setGameId(String gameId)
+	{
+		this.gameId = gameId;
+	}
+
+	private final static Logger logger = LoggerFactory.getLogger(GameLoadManualReq.class);
 
 }

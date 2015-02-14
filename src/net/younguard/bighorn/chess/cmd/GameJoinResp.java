@@ -1,8 +1,8 @@
-package net.younguard.bighorn.broadcast.cmd;
+package net.younguard.bighorn.chess.cmd;
 
 import java.io.UnsupportedEncodingException;
 
-import net.younguard.bighorn.comm.Command;
+import net.younguard.bighorn.CommandTag;
 import net.younguard.bighorn.comm.ResponseCommand;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
@@ -11,19 +11,7 @@ import net.younguard.bighorn.comm.tlv.TlvParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * after connect socket, client send first package for server. put device ID,notify token and username.
- * server answer ok.
- * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights reserved.
- * http://www.younguard.net
- * 
- * NOTICE ! You can copy or redistribute this code freely, but you should not
- * remove the information about the copyright notice and the author.
- * 
- * @author ThomasZhang, thomas.zh@qq.com
- */
-public class RegisterNotifyTokenResp
+public class GameJoinResp
 		extends ResponseCommand
 {
 	@Override
@@ -31,8 +19,8 @@ public class RegisterNotifyTokenResp
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
-		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(this.getRespState()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.short2Byte(this.getRespState()));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
@@ -44,7 +32,7 @@ public class RegisterNotifyTokenResp
 	}
 
 	@Override
-	public Command decode(TlvObject tlv)
+	public GameJoinResp decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
@@ -67,25 +55,25 @@ public class RegisterNotifyTokenResp
 
 	// //////////////////////////////////////////////////////
 
-	public RegisterNotifyTokenResp()
+	public GameJoinResp()
 	{
-		this.setTag(CommandTag.REGISTER_NOTIFY_TOKEN_RESPONSE);
+		this.setTag(CommandTag.GAME_JOIN_RESPONSE);
 	}
 
-	public RegisterNotifyTokenResp(int sequence)
+	public GameJoinResp(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public RegisterNotifyTokenResp(int sequence, short state)
+	public GameJoinResp(int sequence, short state)
 	{
 		this(sequence);
 
 		this.setRespState(state);
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(RegisterNotifyTokenResp.class);
+	private final static Logger logger = LoggerFactory.getLogger(GameJoinResp.class);
 
 }

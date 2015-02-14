@@ -1,4 +1,4 @@
-package net.younguard.bighorn.broadcast.cmd;
+package net.younguard.bighorn.chess.cmd;
 
 import java.io.UnsupportedEncodingException;
 
@@ -11,18 +11,7 @@ import net.younguard.bighorn.comm.tlv.TlvParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Query online device number.
- * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
- * reserved. http://www.younguard.net
- * 
- * NOTICE ! You can copy or redistribute this code freely, but you should not
- * remove the information about the copyright notice and the author.
- * 
- * @author ThomasZhang, thomas.zh@qq.com
- */
-public class QueryOnlineNumReq
+public class GameInviteCreateReq
 		extends RequestCommand
 {
 	@Override
@@ -31,9 +20,13 @@ public class QueryOnlineNumReq
 	{
 		int i = 0;
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tColor = new TlvObject(i++, TlvByteUtil.short2Byte(color));
+		TlvObject tTimeRule = new TlvObject(i++, TlvByteUtil.short2Byte(timeRule));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
+		tlv.add(tColor);
+		tlv.add(tTimeRule);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
@@ -41,12 +34,12 @@ public class QueryOnlineNumReq
 	}
 
 	@Override
-	public QueryOnlineNumReq decode(TlvObject tlv)
+	public GameInviteCreateReq decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
 
-		int childCount = 1;
+		int childCount = 3;
 		TlvParser.decodeChildren(tlv, childCount);
 		logger.debug("from tlv:(tag=" + this.getTag() + ", child=" + childCount + ") to command");
 
@@ -55,22 +48,62 @@ public class QueryOnlineNumReq
 		this.setSequence(TlvByteUtil.byte2Int(tSequence.getValue()));
 		logger.debug("sequence: " + this.getSequence());
 
+		TlvObject tColor = tlv.getChild(i++);
+		color = TlvByteUtil.byte2Short(tColor.getValue());
+		logger.debug("color: " + color);
+
+		TlvObject tTimeRule = tlv.getChild(i++);
+		timeRule = TlvByteUtil.byte2Short(tTimeRule.getValue());
+		logger.debug("timeRule: " + timeRule);
+
 		return this;
 	}
 
 	// //////////////////////////////////////////////////////
 
-	public QueryOnlineNumReq()
+	public GameInviteCreateReq()
 	{
-		this.setTag(CommandTag.QUERY_ONLINE_NUMBER_REQUEST);
+		this.setTag(CommandTag.GAME_INVITE_CREATE_REQUEST);
 	}
 
-	public QueryOnlineNumReq(int sequence)
+	public GameInviteCreateReq(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(QueryOnlineNumReq.class);
+	public GameInviteCreateReq(int sequence, short color, short timeRule)
+	{
+		this(sequence);
+
+		this.setColor(color);
+		this.setTimeRule(timeRule);
+	}
+
+	private short color;
+	private short timeRule;
+
+	public short getColor()
+	{
+		return color;
+	}
+
+	public void setColor(short color)
+	{
+		this.color = color;
+	}
+
+	public short getTimeRule()
+	{
+		return timeRule;
+	}
+
+	public void setTimeRule(short timeRule)
+	{
+		this.timeRule = timeRule;
+	}
+
+	private final static Logger logger = LoggerFactory.getLogger(GameInviteCreateReq.class);
+
 }

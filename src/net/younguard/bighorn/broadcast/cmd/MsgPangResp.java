@@ -2,7 +2,7 @@ package net.younguard.bighorn.broadcast.cmd;
 
 import java.io.UnsupportedEncodingException;
 
-import net.younguard.bighorn.comm.Command;
+import net.younguard.bighorn.CommandTag;
 import net.younguard.bighorn.comm.ResponseCommand;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 /**
  * this the the message response from server for ping request.
  * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights reserved.
- * http://www.younguard.net
+ * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
+ * reserved. http://www.younguard.net
  * 
  * NOTICE ! You can copy or redistribute this code freely, but you should not
  * remove the information about the copyright notice and the author.
@@ -30,8 +30,8 @@ public class MsgPangResp
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
-		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(this.getRespState()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.short2Byte(this.getRespState()));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
@@ -43,7 +43,7 @@ public class MsgPangResp
 	}
 
 	@Override
-	public Command decode(TlvObject tlv)
+	public MsgPangResp decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());

@@ -1,4 +1,4 @@
-package net.younguard.bighorn.broadcast.cmd;
+package net.younguard.bighorn.account.cmd;
 
 import java.io.UnsupportedEncodingException;
 
@@ -12,8 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * this the the message response from server for query online device number
- * request.
+ * after connect socket, client send first package for server. put device
+ * ID,notify token and username. server answer ok.
  * 
  * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
  * reserved. http://www.younguard.net
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author ThomasZhang, thomas.zh@qq.com
  */
-public class QueryOnlineNumResp
+public class RegisterDeviceNotifyTokenResp
 		extends ResponseCommand
 {
 	@Override
@@ -33,12 +33,10 @@ public class QueryOnlineNumResp
 		int i = 0;
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.short2Byte(this.getRespState()));
-		TlvObject tNum = new TlvObject(i++, TlvByteUtil.int2Byte(this.getNum()));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
 		tlv.add(tRespState);
-		tlv.add(tNum);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
@@ -46,12 +44,12 @@ public class QueryOnlineNumResp
 	}
 
 	@Override
-	public QueryOnlineNumResp decode(TlvObject tlv)
+	public RegisterDeviceNotifyTokenResp decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
 
-		int childCount = 3;
+		int childCount = 2;
 		TlvParser.decodeChildren(tlv, childCount);
 		logger.debug("from tlv:(tag=" + this.getTag() + ", child=" + childCount + ") to command");
 
@@ -64,53 +62,30 @@ public class QueryOnlineNumResp
 		this.setRespState(TlvByteUtil.byte2Short(tRespState.getValue()));
 		logger.debug("respState: " + this.getRespState());
 
-		TlvObject tNum = tlv.getChild(i++);
-		this.setNum(TlvByteUtil.byte2Int(tNum.getValue()));
-		logger.debug("num: " + this.getNum());
-
 		return this;
 	}
 
 	// //////////////////////////////////////////////////////
 
-	public QueryOnlineNumResp()
+	public RegisterDeviceNotifyTokenResp()
 	{
-		this.setTag(CommandTag.QUERY_ONLINE_NUMBER_RESPONSE);
+		this.setTag(CommandTag.REGISTER_NOTIFY_TOKEN_RESPONSE);
 	}
 
-	public QueryOnlineNumResp(int sequence)
+	public RegisterDeviceNotifyTokenResp(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public QueryOnlineNumResp(int sequence, short state)
+	public RegisterDeviceNotifyTokenResp(int sequence, short state)
 	{
 		this(sequence);
 
 		this.setRespState(state);
 	}
 
-	public QueryOnlineNumResp(int sequence, short state, int num)
-	{
-		this(sequence, state);
-
-		this.setNum(num);
-	}
-
-	private int num = 0;
-
-	public int getNum()
-	{
-		return num;
-	}
-
-	public void setNum(int num)
-	{
-		this.num = num;
-	}
-
-	private final static Logger logger = LoggerFactory.getLogger(QueryOnlineNumResp.class);
+	private final static Logger logger = LoggerFactory.getLogger(RegisterDeviceNotifyTokenResp.class);
 
 }

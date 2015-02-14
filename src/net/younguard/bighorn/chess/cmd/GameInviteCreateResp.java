@@ -1,4 +1,4 @@
-package net.younguard.bighorn.broadcast.cmd;
+package net.younguard.bighorn.chess.cmd;
 
 import java.io.UnsupportedEncodingException;
 
@@ -11,19 +11,7 @@ import net.younguard.bighorn.comm.tlv.TlvParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * this the the message response from server for query online device number
- * request.
- * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
- * reserved. http://www.younguard.net
- * 
- * NOTICE ! You can copy or redistribute this code freely, but you should not
- * remove the information about the copyright notice and the author.
- * 
- * @author ThomasZhang, thomas.zh@qq.com
- */
-public class QueryOnlineNumResp
+public class GameInviteCreateResp
 		extends ResponseCommand
 {
 	@Override
@@ -33,12 +21,12 @@ public class QueryOnlineNumResp
 		int i = 0;
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.short2Byte(this.getRespState()));
-		TlvObject tNum = new TlvObject(i++, TlvByteUtil.int2Byte(this.getNum()));
+		TlvObject tGameId = new TlvObject(i++, gameId);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
 		tlv.add(tRespState);
-		tlv.add(tNum);
+		tlv.add(tGameId);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
@@ -46,7 +34,7 @@ public class QueryOnlineNumResp
 	}
 
 	@Override
-	public QueryOnlineNumResp decode(TlvObject tlv)
+	public GameInviteCreateResp decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
@@ -64,53 +52,47 @@ public class QueryOnlineNumResp
 		this.setRespState(TlvByteUtil.byte2Short(tRespState.getValue()));
 		logger.debug("respState: " + this.getRespState());
 
-		TlvObject tNum = tlv.getChild(i++);
-		this.setNum(TlvByteUtil.byte2Int(tNum.getValue()));
-		logger.debug("num: " + this.getNum());
+		TlvObject tGameId = tlv.getChild(i++);
+		gameId = new String(tGameId.getValue(), "UTF-8");
+		logger.debug("gameId: " + gameId);
 
 		return this;
 	}
 
 	// //////////////////////////////////////////////////////
 
-	public QueryOnlineNumResp()
+	public GameInviteCreateResp()
 	{
-		this.setTag(CommandTag.QUERY_ONLINE_NUMBER_RESPONSE);
+		this.setTag(CommandTag.GAME_INVITE_CREATE_RESPONSE);
 	}
 
-	public QueryOnlineNumResp(int sequence)
+	public GameInviteCreateResp(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public QueryOnlineNumResp(int sequence, short state)
+	public GameInviteCreateResp(int sequence, short state, String gameId)
 	{
 		this(sequence);
 
 		this.setRespState(state);
+		this.setGameId(gameId);
 	}
 
-	public QueryOnlineNumResp(int sequence, short state, int num)
+	private String gameId;
+
+	public String getGameId()
 	{
-		this(sequence, state);
-
-		this.setNum(num);
+		return gameId;
 	}
 
-	private int num = 0;
-
-	public int getNum()
+	public void setGameId(String gameId)
 	{
-		return num;
+		this.gameId = gameId;
 	}
 
-	public void setNum(int num)
-	{
-		this.num = num;
-	}
-
-	private final static Logger logger = LoggerFactory.getLogger(QueryOnlineNumResp.class);
+	private final static Logger logger = LoggerFactory.getLogger(GameInviteCreateResp.class);
 
 }
