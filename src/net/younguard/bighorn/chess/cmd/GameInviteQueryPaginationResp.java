@@ -9,6 +9,7 @@ import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
 import net.younguard.bighorn.domain.GameInviteInfo;
+import net.younguard.bighorn.domain.GameMasterInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,7 +93,7 @@ public class GameInviteQueryPaginationResp
 		this.setRespState(state);
 	}
 
-	public GameInviteQueryPaginationResp(int sequence, short state, List<GameInviteInfo> invites)
+	public GameInviteQueryPaginationResp(int sequence, short state, List<GameMasterInfo> invites)
 	{
 		this(sequence);
 
@@ -100,14 +101,14 @@ public class GameInviteQueryPaginationResp
 		this.setInvites(invites);
 	}
 
-	private List<GameInviteInfo> invites;
+	private List<GameMasterInfo> invites;
 
-	public List<GameInviteInfo> getInvites()
+	public List<GameMasterInfo> getInvites()
 	{
 		return invites;
 	}
 
-	public void setInvites(List<GameInviteInfo> invites)
+	public void setInvites(List<GameMasterInfo> invites)
 	{
 		this.invites = invites;
 	}

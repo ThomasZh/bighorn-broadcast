@@ -64,6 +64,8 @@ public class CommandTag
 	public static final short GAME_PLAYER_SUMMARY_QUERY_RESPONSE = 20346;
 	public static final short GAME_PLAYERS_QUERY_PAGINATION_REQUEST = 20347;
 	public static final short GAME_PLAYERS_QUERY_PAGINATION_RESPONSE = 20348;
+	public static final short GAME_RESIGN_REQUEST = 20349;
+	public static final short GAME_RESIGN_RESPONSE = 20350;
 
 	
 	// //////////////////////////////////////////////////

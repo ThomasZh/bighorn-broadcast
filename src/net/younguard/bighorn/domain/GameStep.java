@@ -14,12 +14,8 @@ public class GameStep
 	private short x;
 	private short y;
 
-	@Override
-	public String encode()
+	public GameStep()
 	{
-		Gson gson = new Gson();
-		String json = gson.toJson(this);
-		return json;
 	}
 
 	public static GameStep decode(String json)
@@ -35,6 +31,14 @@ public class GameStep
 		this.setColor(color);
 		this.setX(x);
 		this.setY(y);
+	}
+
+	@Override
+	public String encode()
+	{
+		Gson gson = new Gson();
+		String json = gson.toJson(this);
+		return json;
 	}
 
 	public short getColor()

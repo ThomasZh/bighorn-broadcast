@@ -7,6 +7,7 @@ import net.younguard.bighorn.comm.ResponseCommand;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
+import net.younguard.bighorn.domain.PlayerSummary;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,10 +99,17 @@ public class PlayerSummaryQueryResp
 		this.setSequence(sequence);
 	}
 
-	public PlayerSummaryQueryResp(int sequence, String playerId, String nickname, String avatarUrl, short inviteNum,
-			short playingNum, short playedNum)
+	public PlayerSummaryQueryResp(int sequence, short respState)
 	{
 		this(sequence);
+
+		this.setRespState(respState);
+	}
+
+	public PlayerSummaryQueryResp(int sequence, short respState, String playerId, String nickname, String avatarUrl,
+			short inviteNum, short playingNum, short playedNum)
+	{
+		this(sequence, respState);
 
 		this.setPlayerId(playerId);
 		this.setNickname(nickname);
@@ -109,6 +117,18 @@ public class PlayerSummaryQueryResp
 		this.setInviteNum(inviteNum);
 		this.setPlayingNum(playingNum);
 		this.setPlayedNum(playedNum);
+	}
+
+	public PlayerSummaryQueryResp(int sequence, short respState, PlayerSummary player)
+	{
+		this(sequence, respState);
+
+		this.setPlayerId(player.getAccountId());
+		this.setNickname(player.getNickname());
+		this.setAvatarUrl(player.getAvatarUrl());
+		this.setInviteNum(player.getInviteNum());
+		this.setPlayingNum(player.getPlayingNum());
+		this.setPlayedNum(player.getPlayedNum());
 	}
 
 	private String playerId;
