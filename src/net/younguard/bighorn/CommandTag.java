@@ -30,44 +30,49 @@ public class CommandTag
 
 	// //////////////////////////////////////////////////
 	// game
-	public static final short GAME_JOIN_REQUEST = 20301;
-	public static final short GAME_JOIN_RESPONSE = 20302;
-	public static final short GAME_LOAD_MANUAL_REQUEST = 20303;
-	public static final short GAME_LOAD_MANUAL_RESPONSE = 20304;
-	public static final short GAME_PLAY_STEP_REQUEST = 20305;
-	public static final short GAME_PLAY_STEP_RESPONSE = 20306;
-	public static final short GAME_SYNC_STEP_REQUEST = 20307;
-	public static final short GAME_SYNC_STEP_RESPONSE = 20308;
-	public static final short GAME_SYNC_STEP_NOTIFY = 20310;
-	public static final short GAME_HISTORY_QUERY_PAGINATION_REQUEST = 20311;
-	public static final short GAME_HISTORY_QUERY_PAGINATION_RESPONSE = 20312;
-	public static final short GAME_INVITE_CREATE_REQUEST = 20313;
-	public static final short GAME_INVITE_CREATE_RESPONSE = 20314;
-	public static final short GAME_INVITE_QUERY_PAGINATION_REQUEST = 20315;
-	public static final short GAME_INVITE_QUERY_PAGINATION_RESPONSE = 20316;	
-	public static final short GAME_MY_HISTORY_QUERY_PAGINATION_REQUEST = 20317;
-	public static final short GAME_MY_HISTORY_QUERY_PAGINATION_RESPONSE = 20318;
-	public static final short GAME_MY_INVITE_QUERY_PAGINATION_REQUEST = 20319;
-	public static final short GAME_MY_INVITE_QUERY_PAGINATION_RESPONSE = 20320;		
-	public static final short GAME_MY_PLAYING_QUERY_PAGINATION_REQUEST = 20321;
-	public static final short GAME_MY_PLAYING_QUERY_PAGINATION_RESPONSE = 20322;
-	public static final short GAME_PLAYER_HISTORY_QUERY_PAGINATION_REQUEST = 20323;
-	public static final short GAME_PLAYER_HISTORY_QUERY_PAGINATION_RESPONSE = 20324;
-	public static final short GAME_PLAYER_INVITE_QUERY_PAGINATION_REQUEST = 20331;
-	public static final short GAME_PLAYER_INVITE_QUERY_PAGINATION_RESPONSE = 20332;		
-	public static final short GAME_PLAYER_PLAYING_QUERY_PAGINATION_REQUEST = 20333;
-	public static final short GAME_PLAYER_PLAYING_QUERY_PAGINATION_RESPONSE = 20334;
-	public static final short GAME_PLAYING_QUERY_PAGINATION_REQUEST = 20343;
-	public static final short GAME_PLAYING_QUERY_PAGINATION_RESPONSE = 20344;
+	public static final short GAME_INVITE_CREATE_REQUEST = 20301;
+	public static final short GAME_INVITE_CREATE_RESPONSE = 20302;
+	public static final short GAME_INVITE_CREATE_NOTIFY = 20304;
+	public static final short GAME_JOIN_REQUEST = 20305;
+	public static final short GAME_JOIN_RESPONSE = 20306;
+	public static final short GAME_JOIN_NOTIFY = 20308;
+	public static final short GAME_PLAY_STEP_REQUEST = 20309;
+	public static final short GAME_PLAY_STEP_RESPONSE = 20310;
+	public static final short GAME_PLAY_STEP_NOTIFY = 20312;
+	public static final short GAME_LOAD_MANUAL_REQUEST = 20313;
+	public static final short GAME_LOAD_MANUAL_RESPONSE = 20314;
+	public static final short GAME_SYNC_STEP_REQUEST = 20315;
+	public static final short GAME_SYNC_STEP_RESPONSE = 20316;
+	public static final short GAME_RESIGN_REQUEST = 20317;
+	public static final short GAME_RESIGN_RESPONSE = 20318;
+	public static final short GAME_RESIGN_NOTIFY = 20320;
 
-	public static final short GAME_PLAYER_SUMMARY_QUERY_REQUEST = 20345;
-	public static final short GAME_PLAYER_SUMMARY_QUERY_RESPONSE = 20346;
-	public static final short GAME_PLAYERS_QUERY_PAGINATION_REQUEST = 20347;
-	public static final short GAME_PLAYERS_QUERY_PAGINATION_RESPONSE = 20348;
-	public static final short GAME_RESIGN_REQUEST = 20349;
-	public static final short GAME_RESIGN_RESPONSE = 20350;
+	public static final short GAME_INVITE_QUERY_PAGINATION_REQUEST = 20331;
+	public static final short GAME_INVITE_QUERY_PAGINATION_RESPONSE = 20332;
+	public static final short GAME_PLAYING_QUERY_PAGINATION_REQUEST = 20333;
+	public static final short GAME_PLAYING_QUERY_PAGINATION_RESPONSE = 20334;
+	public static final short GAME_HISTORY_QUERY_PAGINATION_REQUEST = 20335;
+	public static final short GAME_HISTORY_QUERY_PAGINATION_RESPONSE = 20336;
 
-	
+	public static final short GAME_MY_INVITE_QUERY_PAGINATION_REQUEST = 20341;
+	public static final short GAME_MY_INVITE_QUERY_PAGINATION_RESPONSE = 20342;
+	public static final short GAME_MY_PLAYING_QUERY_PAGINATION_REQUEST = 20343;
+	public static final short GAME_MY_PLAYING_QUERY_PAGINATION_RESPONSE = 20344;
+	public static final short GAME_MY_HISTORY_QUERY_PAGINATION_REQUEST = 20345;
+	public static final short GAME_MY_HISTORY_QUERY_PAGINATION_RESPONSE = 20346;
+
+	public static final short GAME_PLAYER_INVITE_QUERY_PAGINATION_REQUEST = 20351;
+	public static final short GAME_PLAYER_INVITE_QUERY_PAGINATION_RESPONSE = 20352;
+	public static final short GAME_PLAYER_PLAYING_QUERY_PAGINATION_REQUEST = 20353;
+	public static final short GAME_PLAYER_PLAYING_QUERY_PAGINATION_RESPONSE = 20354;
+	public static final short GAME_PLAYER_HISTORY_QUERY_PAGINATION_REQUEST = 20355;
+	public static final short GAME_PLAYER_HISTORY_QUERY_PAGINATION_RESPONSE = 20356;
+
+	public static final short GAME_PLAYERS_QUERY_PAGINATION_REQUEST = 20361;
+	public static final short GAME_PLAYERS_QUERY_PAGINATION_RESPONSE = 20362;
+	public static final short GAME_PLAYER_SUMMARY_QUERY_REQUEST = 20363;
+	public static final short GAME_PLAYER_SUMMARY_QUERY_RESPONSE = 20364;
+
 	// //////////////////////////////////////////////////
 	// broadcast message
 	public static final short MESSAGE_PING_REQUEST = 21001;

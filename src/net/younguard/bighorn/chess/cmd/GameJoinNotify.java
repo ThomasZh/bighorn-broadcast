@@ -11,7 +11,7 @@ import net.younguard.bighorn.comm.tlv.TlvParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GameStepNotify
+public class GameJoinNotify
 		extends ResponseCommand
 {
 	@Override
@@ -23,18 +23,12 @@ public class GameStepNotify
 		TlvObject tGameId = new TlvObject(i++, gameId);
 		TlvObject tPlayerId = new TlvObject(i++, playerId);
 		TlvObject tColor = new TlvObject(i++, TlvByteUtil.short2Byte(color));
-		TlvObject tStep = new TlvObject(i++, TlvByteUtil.short2Byte(step));
-		TlvObject tX = new TlvObject(i++, TlvByteUtil.short2Byte(x));
-		TlvObject tY = new TlvObject(i++, TlvByteUtil.short2Byte(y));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
 		tlv.add(tGameId);
 		tlv.add(tPlayerId);
 		tlv.add(tColor);
-		tlv.add(tStep);
-		tlv.add(tX);
-		tlv.add(tY);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
@@ -42,7 +36,7 @@ public class GameStepNotify
 	}
 
 	@Override
-	public GameStepNotify decode(TlvObject tlv)
+	public GameJoinNotify decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
@@ -68,53 +62,35 @@ public class GameStepNotify
 		color = TlvByteUtil.byte2Short(tColor.getValue());
 		logger.debug("color: " + color);
 
-		TlvObject tStep = tlv.getChild(i++);
-		step = TlvByteUtil.byte2Short(tStep.getValue());
-		logger.debug("step: " + step);
-
-		TlvObject tX = tlv.getChild(i++);
-		x = TlvByteUtil.byte2Short(tX.getValue());
-		logger.debug("x: " + x);
-
-		TlvObject tY = tlv.getChild(i++);
-		y = TlvByteUtil.byte2Short(tY.getValue());
-		logger.debug("y: " + y);
-
 		return this;
 	}
 
 	// //////////////////////////////////////////////////////
 
-	public GameStepNotify()
+	public GameJoinNotify()
 	{
-		this.setTag(CommandTag.GAME_PLAY_STEP_NOTIFY);
+		this.setTag(CommandTag.GAME_JOIN_NOTIFY);
 	}
 
-	public GameStepNotify(int sequence)
+	public GameJoinNotify(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public GameStepNotify(int sequence, String gameId, String playerId, short color, short step, short x, short y)
+	public GameJoinNotify(int sequence, String gameId, String playerId, short color)
 	{
 		this(sequence);
 
 		this.setGameId(gameId);
 		this.setPlayerId(playerId);
 		this.setColor(color);
-		this.setStep(step);
-		this.setX(x);
-		this.setY(y);
 	}
 
 	private String gameId;
 	private String playerId;
 	private short color;
-	private short step;
-	private short x;
-	private short y;
 
 	public String getGameId()
 	{
@@ -136,36 +112,6 @@ public class GameStepNotify
 		this.color = color;
 	}
 
-	public short getStep()
-	{
-		return step;
-	}
-
-	public void setStep(short step)
-	{
-		this.step = step;
-	}
-
-	public short getX()
-	{
-		return x;
-	}
-
-	public void setX(short x)
-	{
-		this.x = x;
-	}
-
-	public short getY()
-	{
-		return y;
-	}
-
-	public void setY(short y)
-	{
-		this.y = y;
-	}
-
 	public String getPlayerId()
 	{
 		return playerId;
@@ -176,6 +122,6 @@ public class GameStepNotify
 		this.playerId = playerId;
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(GameStepNotify.class);
+	private final static Logger logger = LoggerFactory.getLogger(GameJoinNotify.class);
 
 }

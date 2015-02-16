@@ -10,5 +10,8 @@ public class GlobalArgs
 	public final static short GAME_STATE_INVITE = 105;
 	public final static short GAME_STATE_PLAYING = 106;
 	public final static short GAME_STATE_COMPLETE = 107;
-	public final static short PLAYER_STATE_PLAYING = 106;
+	public final static short PLAYER_STATE_PLAYING = 108;
+	public final static short PLAYER_COLOR_RED = 109;
+	public final static short PLAYER_COLOR_BLACK = 110;
+	
 }
