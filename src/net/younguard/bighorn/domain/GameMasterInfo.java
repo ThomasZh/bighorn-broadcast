@@ -1,21 +1,21 @@
 package net.younguard.bighorn.domain;
 
+import java.util.List;
+
 import com.google.gson.Gson;
 
 public class GameMasterInfo
-		extends JsonBeanAdapter
+		extends GameBaseInfo
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8314628217170723932L;
-	private String gameId;
-	private short timeRule;
-	private int createTime;
-	private short lastStep;
-	private int lastUpdateTime;
-	private short state;
-	private String winnerId;
+	private List<GameMemberMasterInfo> players;
+
+	public GameMasterInfo()
+	{
+	}
 
 	@Override
 	public String encode()
@@ -32,74 +32,14 @@ public class GameMasterInfo
 		return info;
 	}
 
-	public String getGameId()
+	public List<GameMemberMasterInfo> getPlayers()
 	{
-		return gameId;
+		return players;
 	}
 
-	public void setGameId(String gameId)
+	public void setPlayers(List<GameMemberMasterInfo> players)
 	{
-		this.gameId = gameId;
-	}
-
-	public int getCreateTime()
-	{
-		return createTime;
-	}
-
-	public void setCreateTime(int createTime)
-	{
-		this.createTime = createTime;
-	}
-
-	public short getLastStep()
-	{
-		return lastStep;
-	}
-
-	public void setLastStep(short lastStep)
-	{
-		this.lastStep = lastStep;
-	}
-
-	public int getLastUpdateTime()
-	{
-		return lastUpdateTime;
-	}
-
-	public void setLastUpdateTime(int lastUpdateTime)
-	{
-		this.lastUpdateTime = lastUpdateTime;
-	}
-
-	public short getState()
-	{
-		return state;
-	}
-
-	public void setState(short state)
-	{
-		this.state = state;
-	}
-
-	public String getWinnerId()
-	{
-		return winnerId;
-	}
-
-	public void setWinnerId(String winnerId)
-	{
-		this.winnerId = winnerId;
-	}
-
-	public short getTimeRule()
-	{
-		return timeRule;
-	}
-
-	public void setTimeRule(short timeRule)
-	{
-		this.timeRule = timeRule;
+		this.players = players;
 	}
 
 }

@@ -128,7 +128,7 @@ public class PlayerSummaryQueryResp
 		this.setAvatarUrl(player.getAvatarUrl());
 		this.setInviteNum(player.getInviteNum());
 		this.setPlayingNum(player.getPlayingNum());
-		this.setPlayedNum(player.getPlayedNum());
+		this.setPlayedNum(player.getCompletedNum());
 	}
 
 	private String playerId;

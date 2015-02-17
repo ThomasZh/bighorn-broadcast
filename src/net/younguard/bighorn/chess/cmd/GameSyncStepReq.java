@@ -39,7 +39,7 @@ public class GameSyncStepReq
 	{
 		this.setTag(tlv.getTag());
 
-		int childCount = 6;
+		int childCount = 3;
 		TlvParser.decodeChildren(tlv, childCount);
 		logger.debug("from tlv:(tag=" + this.getTag() + ", child=" + childCount + ") to command");
 

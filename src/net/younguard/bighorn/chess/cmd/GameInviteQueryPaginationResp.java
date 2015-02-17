@@ -8,7 +8,6 @@ import net.younguard.bighorn.comm.QueryPaginationResp;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
-import net.younguard.bighorn.domain.GameInviteInfo;
 import net.younguard.bighorn.domain.GameMasterInfo;
 
 import org.slf4j.Logger;
@@ -65,7 +64,7 @@ public class GameInviteQueryPaginationResp
 		String jsonInvites = new String(tInvites.getValue(), "UTF-8");
 		logger.debug("jsonInvites: " + jsonInvites);
 		Gson gson = new Gson();
-		invites = gson.fromJson(jsonInvites, new TypeToken<List<GameInviteInfo>>()
+		invites = gson.fromJson(jsonInvites, new TypeToken<List<GameMasterInfo>>()
 		{
 		}.getType());
 

@@ -41,7 +41,7 @@ public class GameJoinNotify
 	{
 		this.setTag(tlv.getTag());
 
-		int childCount = 7;
+		int childCount = 4;
 		TlvParser.decodeChildren(tlv, childCount);
 		logger.debug("from tlv:(tag=" + this.getTag() + ", child=" + childCount + ") to command");
 

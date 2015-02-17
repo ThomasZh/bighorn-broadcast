@@ -10,6 +10,9 @@ public class GameStep
 	 */
 	private static final long serialVersionUID = -6329042144740644739L;
 	private short step;
+	/**
+	 * red=140,black=141
+	 */
 	private short color;
 	private short x;
 	private short y;
