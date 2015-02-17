@@ -11,7 +11,7 @@ import net.younguard.bighorn.comm.tlv.TlvParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GameStepNotify
+public class GamePlayStepNotify
 		extends ResponseCommand
 {
 	@Override
@@ -42,7 +42,7 @@ public class GameStepNotify
 	}
 
 	@Override
-	public GameStepNotify decode(TlvObject tlv)
+	public GamePlayStepNotify decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
@@ -85,19 +85,19 @@ public class GameStepNotify
 
 	// //////////////////////////////////////////////////////
 
-	public GameStepNotify()
+	public GamePlayStepNotify()
 	{
 		this.setTag(CommandTag.GAME_PLAY_STEP_NOTIFY);
 	}
 
-	public GameStepNotify(int sequence)
+	public GamePlayStepNotify(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public GameStepNotify(int sequence, String gameId, String playerId, short color, short step, short x, short y)
+	public GamePlayStepNotify(int sequence, String gameId, String playerId, short color, short step, short x, short y)
 	{
 		this(sequence);
 
@@ -176,6 +176,6 @@ public class GameStepNotify
 		this.playerId = playerId;
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(GameStepNotify.class);
+	private final static Logger logger = LoggerFactory.getLogger(GamePlayStepNotify.class);
 
 }
