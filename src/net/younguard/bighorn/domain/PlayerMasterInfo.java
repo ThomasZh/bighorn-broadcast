@@ -2,7 +2,7 @@ package net.younguard.bighorn.domain;
 
 import com.google.gson.Gson;
 
-public class PlayerSummary
+public class PlayerMasterInfo
 		extends AccountBaseInfo
 {
 	/**
@@ -13,7 +13,7 @@ public class PlayerSummary
 	private short playingNum;
 	private short completedNum;
 
-	public PlayerSummary()
+	public PlayerMasterInfo()
 	{
 	}
 
@@ -25,10 +25,10 @@ public class PlayerSummary
 		return json;
 	}
 
-	public static PlayerSummary decode(String json)
+	public static PlayerMasterInfo decode(String json)
 	{
 		Gson gson = new Gson();
-		PlayerSummary info = gson.fromJson(json, PlayerSummary.class);
+		PlayerMasterInfo info = gson.fromJson(json, PlayerMasterInfo.class);
 		return info;
 	}
 

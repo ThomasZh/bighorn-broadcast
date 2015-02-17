@@ -11,7 +11,7 @@ public class GameBaseInfo
 	private static final long serialVersionUID = 164527247313891082L;
 	private String gameId;
 	/**
-	 * 1day_25steps=151
+	 * 1day_25steps=150
 	 */
 	private short timeRule;
 	/**

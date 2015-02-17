@@ -7,7 +7,7 @@ import net.younguard.bighorn.comm.ResponseCommand;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
-import net.younguard.bighorn.domain.PlayerSummary;
+import net.younguard.bighorn.domain.PlayerMasterInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,7 +119,7 @@ public class PlayerSummaryQueryResp
 		this.setPlayedNum(playedNum);
 	}
 
-	public PlayerSummaryQueryResp(int sequence, short respState, PlayerSummary player)
+	public PlayerSummaryQueryResp(int sequence, short respState, PlayerMasterInfo player)
 	{
 		this(sequence, respState);
 

@@ -19,6 +19,6 @@ public class GlobalArgs
 	public final static short PLAYER_COLOR_RED = 140;
 	public final static short PLAYER_COLOR_BLACK = 141;
 	
-	public final static short GAME_TIME_RULE_1DAY_25STEPS = 151;
+	public final static short GAME_TIME_RULE_1DAY_25STEPS = 150;
 	
 }
