@@ -20,14 +20,13 @@ public class PlayerSummaryQueryResp
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
-
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tPlayerId = new TlvObject(i++, playerId);
 		TlvObject tNickname = new TlvObject(i++, nickname);
 		TlvObject tAvatarUrl = new TlvObject(i++, avatarUrl);
-		TlvObject tInviteNum = new TlvObject(i++, TlvByteUtil.short2Byte(inviteNum));
-		TlvObject tPlayingNum = new TlvObject(i++, TlvByteUtil.short2Byte(playingNum));
-		TlvObject tPlayedNum = new TlvObject(i++, TlvByteUtil.short2Byte(playedNum));
+		TlvObject tInviteNum = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(inviteNum));
+		TlvObject tPlayingNum = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(playingNum));
+		TlvObject tPlayedNum = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(playedNum));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);

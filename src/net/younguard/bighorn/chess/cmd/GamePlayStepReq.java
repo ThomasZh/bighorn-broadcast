@@ -19,12 +19,12 @@ public class GamePlayStepReq
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tGameId = new TlvObject(i++, gameId);
-		TlvObject tColor = new TlvObject(i++, TlvByteUtil.short2Byte(color));
-		TlvObject tStep = new TlvObject(i++, TlvByteUtil.short2Byte(step));
-		TlvObject tX = new TlvObject(i++, TlvByteUtil.short2Byte(x));
-		TlvObject tY = new TlvObject(i++, TlvByteUtil.short2Byte(y));
+		TlvObject tColor = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(color));
+		TlvObject tStep = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(step));
+		TlvObject tX = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(x));
+		TlvObject tY = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(y));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);

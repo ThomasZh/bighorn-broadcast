@@ -19,9 +19,9 @@ public class PlayersQueryPaginationReq
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
-		TlvObject tPageNum = new TlvObject(i++, TlvByteUtil.short2Byte(this.getPageNum()));
-		TlvObject tPageSize = new TlvObject(i++, TlvByteUtil.short2Byte(this.getPageSize()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tPageNum = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(this.getPageNum()));
+		TlvObject tPageSize = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(this.getPageSize()));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);

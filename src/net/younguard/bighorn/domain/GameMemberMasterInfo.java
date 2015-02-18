@@ -13,6 +13,10 @@ public class GameMemberMasterInfo
 	 * playing=130,invited=131
 	 */
 	private short state;
+	/**
+	 * red=140,black=141
+	 */
+	private short color;
 
 	public GameMemberMasterInfo()
 	{
@@ -41,5 +45,15 @@ public class GameMemberMasterInfo
 	public void setState(short state)
 	{
 		this.state = state;
+	}
+
+	public short getColor()
+	{
+		return color;
+	}
+
+	public void setColor(short color)
+	{
+		this.color = color;
 	}
 }

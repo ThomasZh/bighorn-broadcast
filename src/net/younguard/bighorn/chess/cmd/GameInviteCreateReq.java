@@ -19,9 +19,9 @@ public class GameInviteCreateReq
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
-		TlvObject tColor = new TlvObject(i++, TlvByteUtil.short2Byte(color));
-		TlvObject tTimeRule = new TlvObject(i++, TlvByteUtil.short2Byte(timeRule));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tColor = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(color));
+		TlvObject tTimeRule = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(timeRule));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);

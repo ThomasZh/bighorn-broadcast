@@ -2,14 +2,14 @@ package net.younguard.bighorn.chess.cmd;
 
 import java.io.UnsupportedEncodingException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.younguard.bighorn.CommandTag;
 import net.younguard.bighorn.comm.QueryPaginationReq;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GameInviteQueryPaginationReq
 		extends QueryPaginationReq
@@ -19,9 +19,9 @@ public class GameInviteQueryPaginationReq
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
-		TlvObject tPageNum = new TlvObject(i++, TlvByteUtil.short2Byte(this.getPageNum()));
-		TlvObject tPageSize = new TlvObject(i++, TlvByteUtil.short2Byte(this.getPageSize()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tPageNum = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(this.getPageNum()));
+		TlvObject tPageSize = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(this.getPageSize()));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);

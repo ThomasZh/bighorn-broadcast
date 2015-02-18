@@ -30,7 +30,7 @@ public class QueryOnlineNumReq
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);

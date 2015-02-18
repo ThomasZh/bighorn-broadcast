@@ -19,7 +19,7 @@ public class GameResignNotify
 			throws UnsupportedEncodingException
 	{
 		int i = 0;
-		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.int2Byte(this.getSequence()));
+		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tGameId = new TlvObject(i++, gameId);
 		TlvObject tPlayerId = new TlvObject(i++, playerId);
 

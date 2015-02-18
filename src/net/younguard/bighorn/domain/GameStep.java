@@ -16,6 +16,7 @@ public class GameStep
 	private short color;
 	private short x;
 	private short y;
+	private String accountId;
 
 	public GameStep()
 	{
@@ -82,6 +83,16 @@ public class GameStep
 	public void setY(short y)
 	{
 		this.y = y;
+	}
+
+	public String getAccountId()
+	{
+		return accountId;
+	}
+
+	public void setAccountId(String accountId)
+	{
+		this.accountId = accountId;
 	}
 
 }
