@@ -1,29 +1,22 @@
-package net.younguard.bighorn.broadcast.cmd;
+package net.younguard.bighorn.badge.cmd;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import net.younguard.bighorn.CommandTag;
 import net.younguard.bighorn.comm.ResponseCommand;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
+import net.younguard.bighorn.domain.badge.ListBadgeNumber;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * this the the message response from server for query online device number
- * request.
- * 
- * Copyright 2014-2015 by Young Guard Salon Community, China. All rights
- * reserved. http://www.younguard.net
- * 
- * NOTICE ! You can copy or redistribute this code freely, but you should not
- * remove the information about the copyright notice and the author.
- * 
- * @author ThomasZhang, thomas.zh@qq.com
- */
-public class QueryOnlineNumResp
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+public class QueryInviteListBadgeResp
 		extends ResponseCommand
 {
 	@Override
@@ -33,20 +26,23 @@ public class QueryOnlineNumResp
 		int i = 0;
 		TlvObject tSequence = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getSequence()));
 		TlvObject tRespState = new TlvObject(i++, TlvByteUtil.SHORT_LENGTH, TlvByteUtil.short2Byte(this.getRespState()));
-		TlvObject tNum = new TlvObject(i++, TlvByteUtil.INTEGER_LENGTH, TlvByteUtil.int2Byte(this.getNum()));
+		Gson gson = new Gson();
+		String json = gson.toJson(badges);
+		TlvObject tBadges = new TlvObject(i++, json);
 
 		TlvObject tlv = new TlvObject(this.getTag());
 		tlv.add(tSequence);
 		tlv.add(tRespState);
-		tlv.add(tNum);
+		tlv.add(tBadges);
 
 		logger.debug("from command to tlv package:(tag=" + this.getTag() + ", child=" + i + ", length="
 				+ tlv.getLength() + ")");
+
 		return tlv;
 	}
 
 	@Override
-	public QueryOnlineNumResp decode(TlvObject tlv)
+	public QueryInviteListBadgeResp decode(TlvObject tlv)
 			throws UnsupportedEncodingException
 	{
 		this.setTag(tlv.getTag());
@@ -64,53 +60,57 @@ public class QueryOnlineNumResp
 		this.setRespState(TlvByteUtil.byte2Short(tRespState.getValue()));
 		logger.debug("respState: " + this.getRespState());
 
-		TlvObject tNum = tlv.getChild(i++);
-		this.setNum(TlvByteUtil.byte2Int(tNum.getValue()));
-		logger.debug("num: " + this.getNum());
+		TlvObject tBadges = tlv.getChild(i++);
+		String json = new String(tBadges.getValue(), "UTF-8");
+		logger.debug("json: " + json);
+		Gson gson = new Gson();
+		badges = gson.fromJson(json, new TypeToken<List<ListBadgeNumber>>()
+		{
+		}.getType());
 
 		return this;
 	}
 
 	// //////////////////////////////////////////////////////
 
-	public QueryOnlineNumResp()
+	public QueryInviteListBadgeResp()
 	{
-		this.setTag(CommandTag.QUERY_ONLINE_NUMBER_RESPONSE);
+		this.setTag(CommandTag.QUERY_INVITE_LIST_BADGE_NUMBER_RESPONSE);
 	}
 
-	public QueryOnlineNumResp(int sequence)
+	public QueryInviteListBadgeResp(int sequence)
 	{
 		this();
 
 		this.setSequence(sequence);
 	}
 
-	public QueryOnlineNumResp(int sequence, short state)
+	public QueryInviteListBadgeResp(int sequence, short state)
 	{
 		this(sequence);
 
 		this.setRespState(state);
 	}
 
-	public QueryOnlineNumResp(int sequence, short state, int num)
+	public QueryInviteListBadgeResp(int sequence, short state, List<ListBadgeNumber> badges)
 	{
 		this(sequence, state);
 
-		this.setNum(num);
+		this.setBadges(badges);
 	}
 
-	private int num = 0;
+	private List<ListBadgeNumber> badges;
 
-	public int getNum()
+	public List<ListBadgeNumber> getBadges()
 	{
-		return num;
+		return badges;
 	}
 
-	public void setNum(int num)
+	public void setBadges(List<ListBadgeNumber> badges)
 	{
-		this.num = num;
+		this.badges = badges;
 	}
 
-	private final static Logger logger = LoggerFactory.getLogger(QueryOnlineNumResp.class);
+	private final static Logger logger = LoggerFactory.getLogger(QueryInviteListBadgeResp.class);
 
 }

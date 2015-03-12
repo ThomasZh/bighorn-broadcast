@@ -25,8 +25,14 @@ public class CommandTag
 
 	// //////////////////////////////////////////////////
 	// summary
-	public static final short BADGE_NUMBER_REQUEST = 20201;
-	public static final short BADGE_NUMBER_RESPONSE = 20202;
+	public static final short QUERY_SUMMSRY_BADGE_NUMBER_REQUEST = 20201;
+	public static final short QUERY_SUMMSRY_BADGE_NUMBER_RESPONSE = 20202;
+	public static final short QUERY_HISTORY_LIST_BADGE_NUMBER_REQUEST = 20203;
+	public static final short QUERY_HISTORY_LIST_BADGE_NUMBER_RESPONSE = 20204;
+	public static final short QUERY_INVITE_LIST_BADGE_NUMBER_REQUEST = 20205;
+	public static final short QUERY_INVITE_LIST_BADGE_NUMBER_RESPONSE = 20206;
+	public static final short QUERY_PLAYING_LIST_BADGE_NUMBER_REQUEST = 20207;
+	public static final short QUERY_PLAYING_LIST_BADGE_NUMBER_RESPONSE = 20208;
 
 	// //////////////////////////////////////////////////
 	// game
@@ -46,6 +52,8 @@ public class CommandTag
 	public static final short GAME_RESIGN_REQUEST = 20317;
 	public static final short GAME_RESIGN_RESPONSE = 20318;
 	public static final short GAME_RESIGN_NOTIFY = 20320;
+	public static final short GAME_SYNC_REQUEST = 20321;
+	public static final short GAME_SYNC_RESPONSE = 20322;
 
 	public static final short GAME_INVITE_QUERY_PAGINATION_REQUEST = 20331;
 	public static final short GAME_INVITE_QUERY_PAGINATION_RESPONSE = 20332;
@@ -78,7 +86,6 @@ public class CommandTag
 	public static final short MESSAGE_PING_REQUEST = 21001;
 	public static final short MESSAGE_PANG_RESPONSE = 21002;
 	public static final short MESSAGE_PONG_RESPONSE = 21004;
-	public static final short QUERY_ONLINE_NUMBER_REQUEST = 21005;
-	public static final short QUERY_ONLINE_NUMBER_RESPONSE = 21006;
+	public static final short BADGE_NOTIFY = 21006;
 
 }

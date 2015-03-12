@@ -8,11 +8,17 @@ import net.younguard.bighorn.account.cmd.DeviceLoginReq;
 import net.younguard.bighorn.account.cmd.DeviceLoginResp;
 import net.younguard.bighorn.account.cmd.RegisterDeviceNotifyTokenReq;
 import net.younguard.bighorn.account.cmd.RegisterDeviceNotifyTokenResp;
+import net.younguard.bighorn.badge.cmd.QueryHistroryListBadgeReq;
+import net.younguard.bighorn.badge.cmd.QueryHistroryListBadgeResp;
+import net.younguard.bighorn.badge.cmd.QueryInviteListBadgeReq;
+import net.younguard.bighorn.badge.cmd.QueryInviteListBadgeResp;
+import net.younguard.bighorn.badge.cmd.QueryPlayingListBadgeReq;
+import net.younguard.bighorn.badge.cmd.QueryPlayingListBadgeResp;
+import net.younguard.bighorn.badge.cmd.QuerySummaryBadgeReq;
+import net.younguard.bighorn.badge.cmd.QuerySummaryBadgeResp;
 import net.younguard.bighorn.broadcast.cmd.MsgPangResp;
 import net.younguard.bighorn.broadcast.cmd.MsgPingReq;
 import net.younguard.bighorn.broadcast.cmd.MsgPongNotify;
-import net.younguard.bighorn.broadcast.cmd.QueryOnlineNumReq;
-import net.younguard.bighorn.broadcast.cmd.QueryOnlineNumResp;
 import net.younguard.bighorn.chess.cmd.GameHistoryQueryPaginationReq;
 import net.younguard.bighorn.chess.cmd.GameHistoryQueryPaginationResp;
 import net.younguard.bighorn.chess.cmd.GameInviteCreateReq;
@@ -90,6 +96,23 @@ public class BroadcastCommandParser
 		case CommandTag.SOCKET_CLOSE_REQUEST:
 			return new SocketCloseReq().decode(tlv);
 
+		case CommandTag.QUERY_SUMMSRY_BADGE_NUMBER_REQUEST:
+			return new QuerySummaryBadgeReq().decode(tlv);
+		case CommandTag.QUERY_SUMMSRY_BADGE_NUMBER_RESPONSE:
+			return new QuerySummaryBadgeResp().decode(tlv);
+		case CommandTag.QUERY_INVITE_LIST_BADGE_NUMBER_REQUEST:
+			return new QueryInviteListBadgeReq().decode(tlv);
+		case CommandTag.QUERY_INVITE_LIST_BADGE_NUMBER_RESPONSE:
+			return new QueryInviteListBadgeResp().decode(tlv);
+		case CommandTag.QUERY_PLAYING_LIST_BADGE_NUMBER_REQUEST:
+			return new QueryPlayingListBadgeReq().decode(tlv);
+		case CommandTag.QUERY_PLAYING_LIST_BADGE_NUMBER_RESPONSE:
+			return new QueryPlayingListBadgeResp().decode(tlv);
+		case CommandTag.QUERY_HISTORY_LIST_BADGE_NUMBER_REQUEST:
+			return new QueryHistroryListBadgeReq().decode(tlv);
+		case CommandTag.QUERY_HISTORY_LIST_BADGE_NUMBER_RESPONSE:
+			return new QueryHistroryListBadgeResp().decode(tlv);
+
 		case CommandTag.GAME_HISTORY_QUERY_PAGINATION_REQUEST:
 			return new GameHistoryQueryPaginationReq().decode(tlv);
 		case CommandTag.GAME_HISTORY_QUERY_PAGINATION_RESPONSE:
@@ -163,10 +186,6 @@ public class BroadcastCommandParser
 			return new MsgPangResp().decode(tlv);
 		case CommandTag.MESSAGE_PONG_RESPONSE:
 			return new MsgPongNotify().decode(tlv);
-		case CommandTag.QUERY_ONLINE_NUMBER_REQUEST:
-			return new QueryOnlineNumReq().decode(tlv);
-		case CommandTag.QUERY_ONLINE_NUMBER_RESPONSE:
-			return new QueryOnlineNumResp().decode(tlv);
 
 		default:
 			throw new UnsupportedEncodingException("Unknown command=[" + tlv.getTag() + "]");
