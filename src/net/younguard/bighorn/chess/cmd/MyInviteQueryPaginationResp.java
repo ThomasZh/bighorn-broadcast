@@ -8,7 +8,7 @@ import net.younguard.bighorn.comm.QueryPaginationResp;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
-import net.younguard.bighorn.domain.GameMasterInfo;
+import net.younguard.bighorn.domain.MyGameMasterInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +64,7 @@ public class MyInviteQueryPaginationResp
 		String jsonInvites = new String(tInvites.getValue(), "UTF-8");
 		logger.debug("jsonInvites: " + jsonInvites);
 		Gson gson = new Gson();
-		invites = gson.fromJson(jsonInvites, new TypeToken<List<GameMasterInfo>>()
+		invites = gson.fromJson(jsonInvites, new TypeToken<List<MyGameMasterInfo>>()
 		{
 		}.getType());
 
@@ -92,7 +92,7 @@ public class MyInviteQueryPaginationResp
 		this.setRespState(state);
 	}
 
-	public MyInviteQueryPaginationResp(int sequence, short state, List<GameMasterInfo> invites)
+	public MyInviteQueryPaginationResp(int sequence, short state, List<MyGameMasterInfo> invites)
 	{
 		this(sequence);
 
@@ -100,14 +100,14 @@ public class MyInviteQueryPaginationResp
 		this.setInvites(invites);
 	}
 
-	private List<GameMasterInfo> invites;
+	private List<MyGameMasterInfo> invites;
 
-	public List<GameMasterInfo> getInvites()
+	public List<MyGameMasterInfo> getInvites()
 	{
 		return invites;
 	}
 
-	public void setInvites(List<GameMasterInfo> invites)
+	public void setInvites(List<MyGameMasterInfo> invites)
 	{
 		this.invites = invites;
 	}

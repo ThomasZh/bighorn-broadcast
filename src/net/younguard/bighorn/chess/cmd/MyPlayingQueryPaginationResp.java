@@ -8,7 +8,7 @@ import net.younguard.bighorn.comm.QueryPaginationResp;
 import net.younguard.bighorn.comm.tlv.TlvByteUtil;
 import net.younguard.bighorn.comm.tlv.TlvObject;
 import net.younguard.bighorn.comm.tlv.TlvParser;
-import net.younguard.bighorn.domain.GameMasterInfo;
+import net.younguard.bighorn.domain.MyGameMasterInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +64,7 @@ public class MyPlayingQueryPaginationResp
 		String jsonGames = new String(tGames.getValue(), "UTF-8");
 		logger.debug("jsonGames: " + jsonGames);
 		Gson gson = new Gson();
-		games = gson.fromJson(jsonGames, new TypeToken<List<GameMasterInfo>>()
+		games = gson.fromJson(jsonGames, new TypeToken<List<MyGameMasterInfo>>()
 		{
 		}.getType());
 
@@ -92,7 +92,7 @@ public class MyPlayingQueryPaginationResp
 		this.setRespState(state);
 	}
 
-	public MyPlayingQueryPaginationResp(int sequence, short state, List<GameMasterInfo> games)
+	public MyPlayingQueryPaginationResp(int sequence, short state, List<MyGameMasterInfo> games)
 	{
 		this(sequence);
 
@@ -100,14 +100,14 @@ public class MyPlayingQueryPaginationResp
 		this.setGames(games);
 	}
 
-	private List<GameMasterInfo> games;
+	private List<MyGameMasterInfo> games;
 
-	public List<GameMasterInfo> getGames()
+	public List<MyGameMasterInfo> getGames()
 	{
 		return games;
 	}
 
-	public void setGames(List<GameMasterInfo> games)
+	public void setGames(List<MyGameMasterInfo> games)
 	{
 		this.games = games;
 	}

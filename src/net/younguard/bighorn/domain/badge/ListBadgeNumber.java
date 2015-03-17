@@ -10,6 +10,9 @@ public class ListBadgeNumber
 	 */
 	private static final long serialVersionUID = 8241654224516156143L;
 
+	/**
+	 * gameId;
+	 */
 	private String id;
 	private short num;
 
