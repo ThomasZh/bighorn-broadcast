@@ -2,6 +2,16 @@ package net.younguard.bighorn;
 
 public class GlobalArgs
 {
+	public final static short FALSE = 0;
+	public final static short TRUE = 1;
+
+	public final static short LOGIN_TYPE_LOGINNAME = 201;
+	public final static short LOGIN_TYPE_DEVICEID = 202;
+	public final static short LOGIN_TYPE_EMAIL = 203;
+	public final static short LOGIN_TYPE_PHONE = 204;
+	public final static short LOGIN_TYPE_WECHAT = 205;
+	public final static short LOGIN_TYPE_QQZONE = 206;
+
 	public final static short ACCOUNT_STATE_INACTIVE = 100;
 	public final static short ACCOUNT_STATE_REGISTER = 101;
 	public final static short ACCOUNT_STATE_BIND = 102;
